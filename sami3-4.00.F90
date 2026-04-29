@@ -2798,16 +2798,16 @@
 !        enddo
     endif
 
-    ! -----------------------------------------------
-    ! Read in the chapman function table lookup
-    ! -----------------------------------------------
-    
-    open(unit=77, file='./chapmanfnc.inp' , access='stream' )
-    read(77) cfx
-    read(77) cfchi
-    read(77) chapfunc
-    close(77)
-
+!!$    ! -----------------------------------------------
+!!$    ! Read in the chapman function table lookup
+!!$    ! -----------------------------------------------
+!!$    
+!!$    open(unit=77, file='./chapmanfnc.inp' , access='stream' )
+!!$    read(77) cfx
+!!$    read(77) cfchi
+!!$    read(77) chapfunc
+!!$    close(77)
+!!$
 
     if ( taskid == 0 ) then
         deallocate (altstmp,glatstmp,glonstmp)

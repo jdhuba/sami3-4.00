@@ -16,6 +16,7 @@
     use photo_production_mod
     use atomic_mod
     use grid_mod
+    use chapmanv
 
     implicit none
 
@@ -57,9 +58,8 @@
             do i = 1, 3
                 hscale   = hcof * tn(iz,nfl,nll) * rp2 / amn(idx(i))
                 xscale   = rp / hscale
-                xr       = rtod * acos(coschi)
-                ch1      = chapman(xscale, xr)
-                ! fix: redundant clamp removed -- chapman() already applies min(,1e22)
+                xr       = acos(coschi)
+                ch1      = chapmanApprox(xscale,xr)
                 xmass(i) = denn(iz,nfl,nll,idx(i)) * hscale * ch1 * 1.e5
             enddo
 
