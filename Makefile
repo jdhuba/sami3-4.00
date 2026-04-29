@@ -19,6 +19,7 @@ OBJ	= \
 	madala_sevp_dp.o\
 	sami3-4.00.o\
 	sevp13_dp.o\
+        chapmanv.o\
 	hwm14.o\
 	heating.o\
 	solvers.o\
@@ -37,13 +38,17 @@ OBJ	= \
         magfld.o
 
 
-# intel old ifort
+# intel 
 
-  f90 = mpif90 -O2 -save -mcmodel=large -shared-intel 
+#  f90 = mpif90 -O2 -save -mcmodel=large -shared-intel 
 
 # debug
 
 #  f90 = mpif90 -C -traceback -shared-intel -mcmodel=large
+
+# gfortran
+
+  f90 = mpif90 -O2 -mcmodel=large
 
 .SUFFIXES : .o .f90 .f .F90 .F
 
