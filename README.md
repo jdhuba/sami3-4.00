@@ -7,6 +7,6 @@ based on 'modernization' of SAMI3-3.22 using Claude
 
 the SAMI3 code was developed by J.D. Huba and G. Joyce
 
-important contributions from M. Swisdak, D. Drob, and R. Varney
+important contributions from M. Swisdak, D. Drob, M.-Y. Chou, and R. Varney
 
 user manual needs to be provided and is being developed
