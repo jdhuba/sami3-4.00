@@ -48,7 +48,10 @@ OBJ	= \
 
 # gfortran
 
-  f90 = mpif90 -O2 -mcmodel=large
+  f90 = mpif90 -O2 -mcmodel=large -fno-automatic
+
+# may need to add '--bind-to none -hostfile hostfile' to compilation line
+# where hostfile is 'localhost slots=xx' and xx is number of processes needed
 
 .SUFFIXES : .o .f90 .f .F90 .F
 
