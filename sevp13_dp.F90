@@ -2,8 +2,6 @@
       SUMF,DUMMY1,RTILDA,X,F,ERR,F11,F1N,F21,F2M,M,N,M1,N1,M2,N2,     &
       NBLK,NBLK1,B1,B2,A11,A1N,A21,A2M,ICY,TOL,IFLG,MX,NX)
 
-      IMPLICIT NONE
-
       REAL*8 RINV,RINV1,RCOR,RTILDA,X,DUMMY1,B1,B2
       REAL*8 F,ERR
       REAL*8 AX,AY,CX,CY,BB
@@ -12,22 +10,14 @@
 !      REAL F,ERR
 !      REAL AX,AY,CX,CY,BB
 
-      ! Dummy argument type declarations
-      INTEGER :: M, N, M1, N1, M2, N2, NBLK, NBLK1, MX, NX, ICY, IFLG
-      INTEGER :: NBSIZ2(NBLK), IS(NBLK), IE(NBLK), INX(M)
-      REAL*8  :: SUMF(NBLK), F11(M), F1N(M), F21(N), F2M(N)
-      REAL*8  :: A11, A1N, A21, A2M, TOL
-
       DIMENSION AX(MX,NX),AY(MX,NX),CX(MX,NX),CY(MX,NX),BB(MX,NX)
       DIMENSION RINV(M2,M2,NBLK),RINV1(M2,M2,NBLK1),RCOR(M,3)
-      DIMENSION RTILDA(M2)
+      DIMENSION RTILDA(M2),NBSIZ2(NBLK),IS(NBLK),IE(NBLK),SUMF(NBLK)
       DIMENSION X(MX,NX),F(MX,NX),ERR(MX,NX)
+      DIMENSION F11(M),F1N(M),F21(N),F2M(N)
+      DIMENSION INX(M)
       DIMENSION DUMMY1(M2,M2)
       DIMENSION B1(M2),B2(M2)
-
-      ! Local variables (previously implicit)
-      INTEGER :: I, J, NB, NEUM, IPT, IOUT, MAXSIZ, IX, JX, JF, IENB1
-      REAL*8  :: EPS, AB, AB1, AB2
 
 ! COMPUTE NUMBER OF BOUNDARIES WITH NEUMAN B.C.
  
@@ -59,7 +49,7 @@
       JF=2
 
 !     SOLVER TOLERANCE NO SMALLER THAN EPS*100.
-      TOL=MAX(TOL,EPS*100.)
+      TOL=AMAX1(TOL,EPS*100.)
 
 ! DEFINE I INDICES TO BE USED FOR SOLUTION VARIABLES AT I-1, I+1 IN 
 ! DIFFERENCE EQUATION.
@@ -218,15 +208,7 @@
       RETURN
       END
       SUBROUTINE BLKSIZ(NBSIZ2,NBLK,NBLK1,N,A1N,MAXSIZ)
-      IMPLICIT NONE
-
-      ! Dummy argument type declarations
-      INTEGER :: NBLK, NBLK1, N, MAXSIZ
-      INTEGER :: NBSIZ2(NBLK)
-      REAL*8  :: A1N
-
-      ! Local variables (previously implicit)
-      INTEGER :: NB, NSIZE, NBLEFT, IA
+      DIMENSION NBSIZ2(NBLK)
 
 !  COMPUTE NUMBER OF INTERIOR POINTS IN EACH BLOCK
 
@@ -283,25 +265,17 @@
       SUBROUTINE BSM1(AX,AY,BB,CX,CY,RINV,RINV1,RCOR,DUMMY1,&
       NBSIZ2,IS,IE,INX,M,N,M1,N1,M2,N2,NBLK,NBLK1,B1,B2,MX,NX)
 
-      IMPLICIT NONE
-
       REAL*8 RINV,RINV1,RCOR,DUMMY1,B1,B2
       REAL*8 AX,AY,CX,CY,BB
 
 !      REAL RINV,RINV1,RCOR,DUMMY1,B1,B2
 !      REAL AX,AY,CX,CY,BB
 
-      ! Dummy argument type declarations
-      INTEGER :: M, N, M1, N1, M2, N2, NBLK, NBLK1, MX, NX
-      INTEGER :: NBSIZ2(NBLK), IS(NBLK), IE(NBLK), INX(M)
-
       DIMENSION AX(MX,NX),AY(MX,NX),CX(MX,NX),CY(MX,NX),BB(MX,NX)
       DIMENSION RINV(M2,M2,NBLK),RINV1(M2,M2,NBLK1),RCOR(M,3)
+      DIMENSION NBSIZ2(NBLK),IS(NBLK),IE(NBLK),INX(M)
       DIMENSION DUMMY1(M2,M2)
-      DIMENSION B1(M2),B2(M2)
-
-      ! Local variables (previously implicit)
-      INTEGER :: I, I1, J, J1, K, NB, NBS, IE1, IE2 
+      DIMENSION B1(M2),B2(M2) 
 
 !     PREPROCESSOR : CALCULATION OF INFLUENCE AND RESIDUAL MATRICES
 
@@ -475,9 +449,7 @@
       SUBROUTINE BSM2(AX,AY,BB,CX,CY,RINV,RINV1,RCOR,F,X,RTILDA,ERROR,&
       SUMF,IS,IE,INX,M,N,M1,N1,M2,N2,NBLK,NBLK1,IOUT,MX,NX)
 
-      IMPLICIT NONE
-
-      REAL*8 RINV,RINV1,RCOR,X
+      REAL*8 RINV,RINV1,RCOR,X,RTILDA
       REAL*8 F
       REAL*8 AX,AY,CX,CY,BB
 
@@ -485,18 +457,11 @@
 !      REAL F
 !      REAL AX,AY,CX,CY,BB
 
-      ! Dummy argument type declarations
-      INTEGER :: M, N, M1, N1, M2, N2, NBLK, NBLK1, MX, NX, IOUT
-      INTEGER :: IS(NBLK), IE(NBLK), INX(M)
-      REAL*8  :: SUMF(NBLK), RTILDA(M2), ERROR
-
       DIMENSION AX(MX,NX),AY(MX,NX),CX(MX,NX),CY(MX,NX),BB(MX,NX)
       DIMENSION X(MX,NX),F(MX,NX)
       DIMENSION RINV(M2,M2,NBLK),RINV1(M2,M2,NBLK1),RCOR(M,3)
-
-      ! Local variables (previously implicit)
-      INTEGER :: NSTART, IT3, NB, NB1, ISP1, IEM2, IT, J, J1, I, K, ITM1
-      REAL*8  :: A2, A3, A4
+      DIMENSION SUMF(NBLK),RTILDA(M2)
+      DIMENSION IS(NBLK),IE(NBLK),INX(M)
 
 !          ERROR VECTOR PROPAGATION METHOD
 
@@ -714,7 +679,7 @@
   332 CONTINUE
       IF(NB.NE.1) A3=A2/SUMF(NB-1)
       IF(NB.EQ.1) A3=A2/SUMF(1)
-      A4=MAX(A4,A3)
+      A4=AMAX1(A4,A3)
       IF(IOUT .EQ. 1) THEN
       PRINT 720, NB
   720 FORMAT(1X,' ERROR AT START OF BLOCK#',I4)
@@ -733,23 +698,15 @@
       SUBROUTINE BSM3(AX,AY,BB,CX,CY,X,RCOR,IS,IE,NB,INX,M,N,M1,N1,&
       M2,N2,NBLK,NBLK1,MX,NX)
 
-      IMPLICIT NONE
-
       REAL*8 X,RCOR
       REAL*8 AX,AY,CX,CY,BB
 
 !      REAL X,RCOR
 !      REAL AX,AY,CX,CY,BB
 
-      ! Dummy argument type declarations
-      INTEGER :: M, N, M1, N1, M2, N2, NBLK, NBLK1, MX, NX, IS, IE, NB
-      INTEGER :: INX(M)
-
       DIMENSION AX(MX,NX),AY(MX,NX),CX(MX,NX),CY(MX,NX),BB(MX,NX)
       DIMENSION RCOR(M,3),X(MX,NX)
-
-      ! Local variables (previously implicit)
-      INTEGER :: I, J, ISP1, IEM2
+      DIMENSION INX(M)
 
 !      *****    HOMOGENEOUS MARCHING OF SOLUTION ERROR **********
 
@@ -776,14 +733,9 @@
       RETURN
       END
       SUBROUTINE MATINV(B,B1,B2,M)
-      IMPLICIT NONE
-      INTEGER :: M
-      REAL*8 B,B1,B2
+      IMPLICIT REAL*8(A-H,O-Z)    
       DIMENSION B(M,M)
       DIMENSION B1(M),B2(M)
-
-      ! Local variables (previously covered by IMPLICIT REAL*8(A-H,O-Z))
-      INTEGER :: M1, I, I1, I2, J, IP1, IM1
 !  MATRIX INVERSION USING GAUSSIAN ELIMINATION TO SOLVE
 !      B x(i)  = e(i), 
 !  for a set of unit column vectors e(i)(in which ith element is equal to one)
